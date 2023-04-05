@@ -11,13 +11,6 @@ const cf = new CfHelper();
 const myIpFinder = new IPv4Finder();
 
 async function checkAndUpdate() {
-    if (!await cf.verifyToken()) {
-        const err = new Error('token verify failed');
-        captureException(err);
-        logger.error(err);
-        return;
-    }
-
     const ipv4 = await myIpFinder.getMyIp();
     if (ipv4) {
         await cf.update(ipv4);
@@ -28,7 +21,20 @@ async function checkAndUpdate() {
     }, CHECK_INTERVAL);
 }
 
+async function verifyToken(): Promise<void> {
+    if (!await cf.verifyToken()) {
+        const err = new Error('token verify failed');
+        captureException(err);
+        logger.error(err);
+        return;
+    }
+    setTimeout( async () => {
+        await verifyToken();
+    }, CHECK_INTERVAL * 60 * 24);
+}
+
 checkAndUpdate()
     .then(() => {
+        return verifyToken();
         // do nothing
     });
