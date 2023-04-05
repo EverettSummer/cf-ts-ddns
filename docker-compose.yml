@@ -6,7 +6,7 @@ x-logging: &default-logging
   driver: json-file
 
 services:
-  bgm_fetcher:
+  ddns:
     build: .
     environment:
       ACCOUNT_ID: ${ACCOUNT_ID}
