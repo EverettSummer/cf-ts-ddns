@@ -1,0 +1,19 @@
+version: '3.9'
+x-logging: &default-logging
+  options:
+    max-size: "10m"
+    max-file: "5"
+  driver: json-file
+
+services:
+  bgm_fetcher:
+    build: .
+    environment:
+      ACCOUNT_ID: ${ACCOUNT_ID}
+      AUTH_TOKEN: ${AUTH_TOKEN}
+      DSN: ${DSN}
+      RECORD_NAME: ${RECORD_NAME}
+      ZONE_NAME: ${ZONE_NAME}
+    restart: always
+    command: 'node dist/main.js'
+    logging: *default-logging
