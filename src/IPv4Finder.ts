@@ -26,10 +26,10 @@ export class IPv4Finder {
             return resp.data as string;
         } catch (ex) {
             logger.error(ex);
-            captureException(ex);
+            // captureException(ex);
             this.errorCount++;
             if (this.errorCount >= MAX_ERROR_COUNT) {
-                captureException(new Error('max error count reached'));
+                captureException(new Error('getMyIP max error count reached'));
                 return null;
             }
             await sleep(RETRY_INTERVAL);
