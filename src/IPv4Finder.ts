@@ -3,10 +3,10 @@ import { getStdLogger } from './logger';
 import { promisify } from 'util';
 import axios, { Axios } from 'axios';
 
-const sleep = promisify(setTimeout) as (time: number) => void;
+const sleep = promisify(setTimeout);
 
 const logger = getStdLogger();
-const PUBLIC_IP_GETTER = ['https://api.myip.la', 'https://api.ipify.org'];
+export const PUBLIC_IP_GETTER = ['https://api.myip.la', 'https://api.ipify.org', 'https://res.iroha.io/myip'];
 const MAX_ERROR_COUNT = 20;
 
 const RETRY_INTERVAL = 30000;
@@ -35,9 +35,17 @@ export class IPv4Finder {
                 captureException(new Error('getMyIP max error count reached'));
                 return null;
             }
-            this._ipGetter = PUBLIC_IP_GETTER[Math.abs(this._ipGetterIdx - 1)];
+            this.nextIpGetter();
             await sleep(RETRY_INTERVAL);
             return await this.getMyIp();
         }
+    }
+
+    public nextIpGetter(): void {
+        this._ipGetterIdx++;
+        if (this._ipGetterIdx >= PUBLIC_IP_GETTER.length) {
+            this._ipGetterIdx = 0;
+        }
+        this._ipGetter = PUBLIC_IP_GETTER[this._ipGetterIdx];
     }
 }
