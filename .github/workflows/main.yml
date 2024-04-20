@@ -20,14 +20,13 @@ jobs:
     - name: Login to GHCR
       uses: docker/login-action@v3
       with:
-        registry: ghcr.io/irohalab
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
       uses: docker/build-push-action@v5
       with:
         push: true
         tags: |
-          ghcr.io/everettsummer/cf-ts-ddns:latest
-          ghcr.io/everettsummer/cf-ts-ddns:${{ github.ref_name }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/cf-ts-ddns:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/cf-ts-ddns:${{ github.ref_name }}
