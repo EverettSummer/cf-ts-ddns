@@ -1,7 +1,7 @@
 version: '3'
 services:
   ddns:
-    build: .
+    image: 'everettsummer/cf-ts-ddns:latest'
     environment:
       ACCOUNT_ID: ${ACCOUNT_ID}
       AUTH_TOKEN: ${AUTH_TOKEN}
