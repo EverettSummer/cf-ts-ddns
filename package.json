@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@sentry/node": "^7.46.0",
-    "axios": "^1.6.8",
+    "axios": "^1.8.2",
     "pino": "^8.11.0"
   },
   "ava": {
