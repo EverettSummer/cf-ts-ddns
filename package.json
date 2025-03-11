@@ -21,7 +21,7 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@sentry/node": "^7.46.0",
+    "@sentry/node": "^7.120.3",
     "axios": "^1.8.2",
     "pino": "^8.11.0"
   },
